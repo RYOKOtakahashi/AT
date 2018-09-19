@@ -4,6 +4,11 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
 
+  has_many :items, dependent: :destroy
+
+  validates :user_name, presence: true
+  validates :encrypted_password, presence: true, uniqueness: true, length: { minimum: 4 }
+
   def email_required?
     false
   end
